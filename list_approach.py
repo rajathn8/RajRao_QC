@@ -1,6 +1,6 @@
 '''
 Approach 2
-Using List
+Using List and Dict
 
 '''
 import argparse
