@@ -17,8 +17,9 @@ def read_log_file(file_name, input_date):
     with open(file_name, "r", encoding='UTF-8') as file:
 
         reader = csv.reader(file)
-        
-        cookie_list_for_date = [ line[0] for line in reader if line[1][:10] == input_date]
+
+        cookie_list_for_date = [line[0]
+                                for line in reader if line[1][:10] == input_date]
 
     '''
     To Do 
@@ -46,7 +47,7 @@ def return_most_active_cookie(input_list):
         return ['No Cookie for Mentioned Date']
 
     max_cookie_count = max(cookie_counter.values())
-    
+
     return [cookie for cookie in cookie_counter if cookie_counter[cookie] == max_cookie_count]
 
 
