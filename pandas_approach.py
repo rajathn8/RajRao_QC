@@ -12,10 +12,10 @@ def read_log_file(file_name):
 
     file = pd.read_csv(file_name)
     '''
-    To Do 
+    To Do
     --> Add Chunks
     --> We can add additional checks to make sure our file is not corrupt
-    --> Exception Handling if file not found 
+    --> Exception Handling if file not found
     '''
 
     return file
@@ -40,7 +40,21 @@ def return_most_active_cookie(input_log_file, input_date):
 
     filtererd_cookie_for_day = input_log_file[input_log_file['date']
                                               == input_date]['cookie']
-    return filtererd_cookie_for_day.mode()[0] if 0 < len(filtererd_cookie_for_day) else 'No Cookie For Specified date'
+
+    cookie_counter = {}
+
+    for cookie in filtererd_cookie_for_day:
+        if cookie in cookie_counter:
+            cookie_counter[cookie] = cookie_counter[cookie]+1
+        else:
+            cookie_counter[cookie] = 1
+
+    if len(cookie_counter) == 0:
+        return ['No Cookie for Mentioned Date']
+
+    max_cookie_count = max(cookie_counter.values())
+
+    return [cookie for cookie in cookie_counter if cookie_counter[cookie] == max_cookie_count]
 
 
 if __name__ == '__main__':
@@ -54,9 +68,11 @@ if __name__ == '__main__':
 
     log_file = read_log_file(args.filename)
     cookie_date = parse_input_date(args.date)
-    cookie = return_most_active_cookie(log_file, cookie_date)
 
-    print(cookie)
+    active_cookie = return_most_active_cookie(log_file, cookie_date)
+
+    for values in active_cookie:
+        print(values)
 
 '''
 Test Cases
